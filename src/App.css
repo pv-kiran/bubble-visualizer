@@ -22,13 +22,21 @@ form button {
   display: block;
 }
 
-form input , form button {
+form input , form button , button {
   padding: 1rem;
 }
+
+.btn-sort {
+  width: 10rem;
+  margin: 1rem auto;
+  display: block;
+}
+
 section {
   width: 75%;
   margin: 2rem auto ;
   display: flex;
+  justify-content: center;
   gap: 1rem;
 }
 

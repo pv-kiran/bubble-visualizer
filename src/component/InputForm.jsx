@@ -24,7 +24,9 @@ function InputForm() {
         />
         <button type="submit">Add</button>
       </form>
-      <button onClick={() => dispatch(sortArr())}>Sort</button>
+      <button className="btn-sort" onClick={() => dispatch(sortArr())}>
+        Sort
+      </button>
     </>
   );
 }

@@ -12,15 +12,17 @@ const sortSlice = createSlice({
       state.inputArr = [...state.inputArr, action.payload];
     },
     sortArr: (state) => {
-      for (let i = 0; i < state.inputArr.length; i++) {
-        for (let j = 1; j < state.inputArr.length - i; j++) {
-          if (state.inputArr[j] < state.inputArr[j - 1]) {
-            let temp = state.inputArr[j - 1];
-            state.inputArr[j - 1] = state.inputArr[j];
-            state.inputArr[j] = temp;
+      const inputArrCopy = [...state.inputArr];
+      for (let i = 0; i < inputArrCopy.length; i++) {
+        for (let j = 1; j < inputArrCopy.length - i; j++) {
+          if (inputArrCopy[j] < inputArrCopy[j - 1]) {
+            let temp = inputArrCopy[j - 1];
+            inputArrCopy[j - 1] = inputArrCopy[j];
+            inputArrCopy[j] = temp;
           }
         }
       }
+      state.inputArr = inputArrCopy;
     },
   },
 });
