@@ -11,7 +11,19 @@ const sortSlice = createSlice({
     saveInput: (state, action) => {
       state.inputArr = [...state.inputArr, action.payload];
     },
-    sortArr: () => {},
+    sortArr: (state) => {
+      const inputArrCopy = [...state.inputArr];
+      for (let i = 0; i < inputArrCopy.length; i++) {
+        for (let j = 1; j < inputArrCopy.length - i; j++) {
+          if (inputArrCopy[j] < inputArrCopy[j - 1]) {
+            let temp = inputArrCopy[j - 1];
+            inputArrCopy[j - 1] = inputArrCopy[j];
+            inputArrCopy[j] = temp;
+          }
+        }
+      }
+      state.inputArr = inputArrCopy;
+    },
   },
 });
 

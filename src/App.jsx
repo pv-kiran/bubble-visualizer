@@ -1,14 +1,11 @@
-import { useSelector } from "react-redux";
 import "./App.css";
-
+import InputForm from "./component/InputForm";
+import Visualizer from "./component/Visualizer";
 function App() {
-  const { inputArr } = useSelector((state) => {
-    return state.sort;
-  });
-  console.log(inputArr);
   return (
     <>
-      <h1>Sorting</h1>
+      <InputForm />
+      <Visualizer></Visualizer>
     </>
   );
 }
