@@ -1,22 +1,26 @@
 import { useState } from "react";
 import { saveInput, sortArr } from "../feature/sortSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function InputForm() {
-  const [input, setInput] = useState(0);
+  const { inputArr } = useSelector((state) => {
+    return state.sort;
+  });
+
+  const [input, setInput] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(saveInput(parseInt(input)));
-    setInput(0);
+    setInput("");
   };
 
   return (
     <>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
-          type="number"
+          type="text"
           name="input"
           id="input"
           value={input}
@@ -24,9 +28,17 @@ function InputForm() {
         />
         <button type="submit">Add</button>
       </form>
-      <button className="btn-sort" onClick={() => dispatch(sortArr())}>
-        Sort
-      </button>
+      <section>
+        {inputArr.length > 0 &&
+          inputArr.map((item, index) => {
+            return <div key={index}>{item}</div>;
+          })}
+      </section>
+      {inputArr.length > 1 && (
+        <button className="btn-sort" onClick={() => dispatch(sortArr())}>
+          Sort
+        </button>
+      )}
     </>
   );
 }
