@@ -12,8 +12,14 @@ function InputForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(saveInput(parseInt(input)));
-    setInput("");
+
+    const arrInput = input.split(",");
+    const arrConverted = arrInput.map((item) => parseInt(item));
+    // console.log(arrConverted);
+    // console.log(arrConverted);
+    dispatch(saveInput(arrConverted));
+    // dispatch(saveInput(parseInt(input)));
+    // setInput("");
   };
 
   return (
