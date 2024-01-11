@@ -12,7 +12,8 @@ const sortSlice = createSlice({
   reducers: {
     // saving the use input
     saveInput: (state, action) => {
-      state.inputArr = [...state.inputArr, action.payload];
+      state.inputArr = action.payload;
+      // state.inputArr = [...state.inputArr, action.payload];
     },
 
     // sorting the user input array
