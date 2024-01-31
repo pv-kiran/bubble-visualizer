@@ -1,11 +1,11 @@
 import "./App.css";
 import InputForm from "./component/InputForm";
-import Visualizer from "./component/Visualizer";
+import NewVisualizer from "./component/NewVisualizer";
 function App() {
   return (
     <>
       <InputForm />
-      <Visualizer></Visualizer>
+      <NewVisualizer />
     </>
   );
 }

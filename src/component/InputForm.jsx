@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { saveInput, sortArr } from "../feature/sortSlice";
+import {
+  saveInput,
+  // setSortData,
+  sortComplete,
+  testSort,
+} from "../feature/sortSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function InputForm() {
@@ -12,14 +17,43 @@ function InputForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const arrInput = input.split(",");
     const arrConverted = arrInput.map((item) => parseInt(item));
-    // console.log(arrConverted);
-    // console.log(arrConverted);
     dispatch(saveInput(arrConverted));
-    // dispatch(saveInput(parseInt(input)));
-    // setInput("");
+  };
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setInput(value);
+  };
+
+  const sort = () => {
+    const inputArrCopy = [...inputArr];
+    let i = 0;
+    let j = 1;
+    let intervalId = setInterval(() => {
+      if (i < inputArrCopy.length) {
+        if (j < inputArrCopy.length - i) {
+          if (inputArrCopy[j] < inputArrCopy[j - 1]) {
+            let temp = inputArrCopy[j - 1];
+            inputArrCopy[j - 1] = inputArrCopy[j];
+            inputArrCopy[j] = temp;
+          }
+
+          dispatch(
+            testSort({ testArr: [...inputArrCopy], testIndices: [j - 1, j] })
+          );
+
+          j++;
+        } else {
+          i++;
+          j = 1;
+        }
+      } else {
+        clearInterval(intervalId);
+        dispatch(sortComplete());
+      }
+    }, 1000);
   };
 
   return (
@@ -30,18 +64,18 @@ function InputForm() {
           name="input"
           id="input"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => handleChange(e)}
         />
         <button type="submit">Add</button>
       </form>
       <section>
-        {inputArr.length > 0 &&
-          inputArr.map((item, index) => {
+        {inputArr?.length > 0 &&
+          inputArr?.map((item, index) => {
             return <div key={index}>{item}</div>;
           })}
       </section>
-      {inputArr.length > 1 && (
-        <button className="btn-sort" onClick={() => dispatch(sortArr())}>
+      {inputArr?.length > 1 && (
+        <button className="btn-sort" onClick={() => sort()}>
           Sort
         </button>
       )}

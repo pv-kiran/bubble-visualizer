@@ -4,6 +4,9 @@ const initialState = {
   inputArr: [],
   sortSteps: [],
   compareIndices: [],
+  testArr: [],
+  testIndices: [],
+  isComplete: false,
 };
 
 const sortSlice = createSlice({
@@ -13,38 +16,28 @@ const sortSlice = createSlice({
     // saving the use input
     saveInput: (state, action) => {
       state.inputArr = action.payload;
-      // state.inputArr = [...state.inputArr, action.payload];
     },
 
-    // sorting the user input array
-    sortArr: (state) => {
-      const inputArrCopy = [...state.inputArr];
-      let sortSteps = [];
-      let compareIndices = [];
+    testSort: (state, action) => {
+      const { testArr, testIndices } = action.payload;
+      console.log(testArr);
+      state.testArr = testArr;
+      state.testIndices = testIndices;
+    },
 
-      // sorting logic
-      for (let i = 0; i < inputArrCopy.length; i++) {
-        for (let j = 1; j < inputArrCopy.length - i; j++) {
-          if (inputArrCopy[j] < inputArrCopy[j - 1]) {
-            let temp = inputArrCopy[j - 1];
-            inputArrCopy[j - 1] = inputArrCopy[j];
-            inputArrCopy[j] = temp;
-          }
-
-          // visualization logic
-          sortSteps.push([...inputArrCopy]);
-          compareIndices.push([j - 1, j]);
-        }
-      }
-      // sorted array
+    sortComplete: (state) => {
+      state.isComplete = true;
+    },
+    // saving the sorting result and the sorting steps for the visualization
+    setSortData: (state, action) => {
+      const { inputArrCopy, sortSteps, compareIndices } = action.payload;
       state.inputArr = inputArrCopy;
-
-      // visualization logic
       state.sortSteps = sortSteps;
       state.compareIndices = compareIndices;
     },
   },
 });
 
-export const { saveInput, sortArr } = sortSlice.actions;
+export const { saveInput, sortArr, setSortData, testSort, sortComplete } =
+  sortSlice.actions;
 export default sortSlice.reducer;

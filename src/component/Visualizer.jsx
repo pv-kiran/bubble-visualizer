@@ -17,7 +17,7 @@ function Visualizer() {
 
     // cleanup function
     return () => clearInterval(timer);
-  }, [currentStep, sortSteps.length]);
+  }, [currentStep, sortSteps?.length]);
 
   return (
     <section>
