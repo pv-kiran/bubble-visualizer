@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   saveInput,
-  setSortData,
+  // setSortData,
   sortComplete,
   testSort,
 } from "../feature/sortSlice";
@@ -29,28 +29,31 @@ function InputForm() {
 
   const sort = () => {
     const inputArrCopy = [...inputArr];
-    let sortSteps = [];
-    let compareIndices = [];
+    let i = 0;
+    let j = 1;
+    let intervalId = setInterval(() => {
+      if (i < inputArrCopy.length) {
+        if (j < inputArrCopy.length - i) {
+          if (inputArrCopy[j] < inputArrCopy[j - 1]) {
+            let temp = inputArrCopy[j - 1];
+            inputArrCopy[j - 1] = inputArrCopy[j];
+            inputArrCopy[j] = temp;
+          }
 
-    // sorting logic
-    for (let i = 0; i < inputArrCopy.length; i++) {
-      for (let j = 1; j < inputArrCopy.length - i; j++) {
-        if (inputArrCopy[j] < inputArrCopy[j - 1]) {
-          let temp = inputArrCopy[j - 1];
-          inputArrCopy[j - 1] = inputArrCopy[j];
-          inputArrCopy[j] = temp;
+          dispatch(
+            testSort({ testArr: [...inputArrCopy], testIndices: [j - 1, j] })
+          );
+
+          j++;
+        } else {
+          i++;
+          j = 1;
         }
-
-        // visualization logic
-        sortSteps.push([...inputArrCopy]);
-        compareIndices.push([j - 1, j]);
-        dispatch(
-          testSort({ testArr: [...inputArrCopy], testIndices: [j - 1, j] })
-        );
+      } else {
+        clearInterval(intervalId);
+        dispatch(sortComplete());
       }
-    }
-    dispatch(sortComplete());
-    dispatch(setSortData({ inputArrCopy, sortSteps, compareIndices }));
+    }, 1000);
   };
 
   return (
