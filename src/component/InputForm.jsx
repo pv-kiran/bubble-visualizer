@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { saveInput, setSortData } from "../feature/sortSlice";
+import {
+  saveInput,
+  setSortData,
+  sortComplete,
+  testSort,
+} from "../feature/sortSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function InputForm() {
@@ -39,8 +44,12 @@ function InputForm() {
         // visualization logic
         sortSteps.push([...inputArrCopy]);
         compareIndices.push([j - 1, j]);
+        dispatch(
+          testSort({ testArr: [...inputArrCopy], testIndices: [j - 1, j] })
+        );
       }
     }
+    dispatch(sortComplete());
     dispatch(setSortData({ inputArrCopy, sortSteps, compareIndices }));
   };
 

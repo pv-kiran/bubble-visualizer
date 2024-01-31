@@ -4,6 +4,9 @@ const initialState = {
   inputArr: [],
   sortSteps: [],
   compareIndices: [],
+  testArr: [],
+  testIndices: [],
+  isComplete: false,
 };
 
 const sortSlice = createSlice({
@@ -15,6 +18,16 @@ const sortSlice = createSlice({
       state.inputArr = action.payload;
     },
 
+    testSort: (state, action) => {
+      const { testArr, testIndices } = action.payload;
+      console.log(testArr);
+      state.testArr = testArr;
+      state.testIndices = testIndices;
+    },
+
+    sortComplete: (state) => {
+      state.isComplete = true;
+    },
     // saving the sorting result and the sorting steps for the visualization
     setSortData: (state, action) => {
       const { inputArrCopy, sortSteps, compareIndices } = action.payload;
@@ -25,5 +38,6 @@ const sortSlice = createSlice({
   },
 });
 
-export const { saveInput, sortArr, setSortData } = sortSlice.actions;
+export const { saveInput, sortArr, setSortData, testSort, sortComplete } =
+  sortSlice.actions;
 export default sortSlice.reducer;
